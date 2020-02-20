@@ -75,6 +75,21 @@ tutorial.
 Here, I will use the terms "command" and "keystroke" and "macro"
 interchangably.
 
+*** File Input/Output Commands
+The following commands are useful when editing files.
+|-----------+------------------------|
+| Macro     | Action                 |
+|-----------+------------------------|
+| =C-x C-x= | Save buffer to file.   |
+|-----------+------------------------|
+| =C-x C-c= | Quit Emacs             |
+|-----------+------------------------|
+| =C-a=     | Go to begining of line |
+|-----------+------------------------|
+| =C-e=     | Go to end of line      |
+|-----------+------------------------|
+| =C-x C-u= | Undo previous command  |
+
 * Extending Emacs: elisp
 The great power of Emacs is the fact that it is extensible. Emacs is
 associated with its own programming languate, Emacs lisp (for short, I
@@ -121,21 +136,9 @@ which include--but are not limited to:
 One of the best introductions to Org mode--- and the one that got me
 hooked--- is John Kitchin's [[https://youtu.be/fgizHHd7nOo][video]].
 
-*** File Input/Output Commands
-The following commands are useful when editing files.
-|-----------+------------------------|
-| Macro     | Action                 |
-|-----------+------------------------|
-| =C-x C-x= | Save buffer to file.   |
-|-----------+------------------------|
-| =C-x C-c= | Quit Emacs             |
-|-----------+------------------------|
-| =C-a=     | Go to begining of line |
-|-----------+------------------------|
-| =C-e=     | Go to end of line      |
-|-----------+------------------------|
-| =C-x C-u= | Undo previous command  |
+** Summary of Useful Org Mode Commands and Keystrokes
 
+The following useful commands are unique to Org mode.
 
 *** Outlines and Lists
 

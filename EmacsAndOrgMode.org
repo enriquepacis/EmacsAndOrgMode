@@ -71,53 +71,9 @@ keystroke =M-x= is accomplished.
 Now, if you haven't already done so, start the built-in Emacs
 tutorial.
 
-** Summary of Useful Commands and Keystrokes
+** Summary of Useful Emacs Commands and Keystrokes
 Here, I will use the terms "command" and "keystroke" and "macro"
 interchangably.
-
-*** File Input/Output Commands
-The following commands are useful when editing files.
-|-----------+------------------------|
-| Macro     | Action                 |
-|-----------+------------------------|
-| =C-x C-x= | Save buffer to file.   |
-|-----------+------------------------|
-| =C-x C-c= | Quit Emacs             |
-|-----------+------------------------|
-| =C-a=     | Go to begining of line |
-|-----------+------------------------|
-| =C-e=     | Go to end of line      |
-|-----------+------------------------|
-| =C-x C-u= | Undo previous command  |
-
-
-*** Outlines and Lists
-
-Outline items are defined by starting a line with asterisks (=*=). The
-number of asterisks determines the level of the outline item, as
-follows:
-
-|---------------------+-----------------------------------------------|
-| Macro               | Action                                        |
-|---------------------+-----------------------------------------------|
-| =M+RET=             | Insert a new heading, item or row.            |
-|---------------------+-----------------------------------------------|
-| =OPT+RET=           | Insert a new heading, item or row. (Aquamacs) |
-|---------------------+-----------------------------------------------|
-| =OPT+(left arrow)=  | Promote outline/list item. (Aquamacs)         |
-|---------------------+-----------------------------------------------|
-| =OPT+(right arrow)= | Demote outline/list item. (Aquamacs)          |
-|                     |                                               |
-
-
-*** LaTeX Export Commands
-
-| Macro         | Action                    |
-|---------------+---------------------------  |
-| =C-c C-e l l= | Export to LaTeX document. |
-|---------------+---------------------------|
-| =C-c C-x C-l= | Render LaTeX equations.   |
-
 
 * Extending Emacs: elisp
 The great power of Emacs is the fact that it is extensible. Emacs is
@@ -164,6 +120,51 @@ which include--but are not limited to:
 
 One of the best introductions to Org mode--- and the one that got me
 hooked--- is John Kitchin's [[https://youtu.be/fgizHHd7nOo][video]].
+
+*** File Input/Output Commands
+The following commands are useful when editing files.
+|-----------+------------------------|
+| Macro     | Action                 |
+|-----------+------------------------|
+| =C-x C-x= | Save buffer to file.   |
+|-----------+------------------------|
+| =C-x C-c= | Quit Emacs             |
+|-----------+------------------------|
+| =C-a=     | Go to begining of line |
+|-----------+------------------------|
+| =C-e=     | Go to end of line      |
+|-----------+------------------------|
+| =C-x C-u= | Undo previous command  |
+
+
+*** Outlines and Lists
+
+Outline items are defined by starting a line with asterisks (=*=). The
+number of asterisks determines the level of the outline item, as
+follows:
+
+|---------------------+-----------------------------------------------|
+| Macro               | Action                                        |
+|---------------------+-----------------------------------------------|
+| =M+RET=             | Insert a new heading, item or row.            |
+|---------------------+-----------------------------------------------|
+| =OPT+RET=           | Insert a new heading, item or row. (Aquamacs) |
+|---------------------+-----------------------------------------------|
+| =OPT+(left arrow)=  | Promote outline/list item. (Aquamacs)         |
+|---------------------+-----------------------------------------------|
+| =OPT+(right arrow)= | Demote outline/list item. (Aquamacs)          |
+|                     |                                               |
+
+
+*** LaTeX Export Commands
+
+| Macro         | Action                    |
+|---------------+---------------------------|
+| =C-c C-e l l= | Export to LaTeX document. |
+|---------------+---------------------------|
+| =C-c C-x C-l= | Render LaTeX equations.   |
+
+
 
 
 * Extending Emacs: Org-ref

@@ -4,6 +4,15 @@
 #+LATEX_HEADER: \usepackage[version=4]{mhchem}
 #+LATEX_HEADER: \usepackage{color}
 
+* Why Emacs?
+
+- *Question:* Why Emacs?
+- /Answer:/ Because _Org mode_.
+- *Question:* Why Org mode?
+- /Answer:/ Because [[https://youtu.be/fgizHHd7nOo][Org mode is awesome]].
+
+Check out the link above to discover just how powerful Org mode really is.
+
 * About This Document
 
 This document was written using the Emacs in Org mode. While the

@@ -1,0 +1,198 @@
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LATEX_HEADER: \usepackage{cite}
+#+LATEX_HEADER: \usepackage{braket,cancel}
+#+LATEX_HEADER: \usepackage[version=4]{mhchem}
+#+LATEX_HEADER: \usepackage{color}
+
+* About This Document
+
+This document was written using the Emacs in Org mode. While the
+learning curve for using Emacs is very steep, Emacs is very powerful
+because it is extensible. There are very good reasons for using Emacs
+in Org mode to write this or other documents. Reasons include:
+- Mark-up is easy and is supported in GitHub
+- Org mode has export-to-LaTeX capabilities
+- Org mode supports code blocks in numerous languages which are
+  executable directly in Emacs.
+- In Org mode, a document can be divided into sections which are
+  easily expanded or collapsed. This allows for keeping vast
+  collections of notes in a single document which are easily
+  navigable.
+- Other features of Org mode:
+  - To-do lists
+  - Tables are easy to create
+  - Hyperlinks are easy to include
+
+
+* Obtaining Emacs
+
+| Software  | Platforms         |
+|-----------+-------------------|
+| [[http://aquamacs.org][Aquamacs]]  | Mac               |
+| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]] | Windows/Mac/Linux |
+
+** Additional Notes
+
+I'm a Mac user, so most of my insights here are gained on the Mac OS
+X, which is fundamentally a form of UNIX. I try to generalize these
+notes as much as possible.
+
+Mac OS X comes with a version of Emacs installed, but as I first
+started exploring Emacs, I found that the built-in version did not
+support Org mode. Therefore, I favored Aquamacs, because it supported
+Org mode and many of the other prerequisites for Org mode.
+
+
+* Getting Started With Emacs
+
+Step zero in getting started with Emacs is to take the built-in
+tutorial. To do this, fire up your Emacs program using the keystroke
+=C-h t=. To use this keystroke, you must first understand this fairly
+standard form for listing Emacs keystrokes. I describe it below. Once
+you know how to do the keystrokes, you will be in a good position to
+start the tutorial. Once you complete the tutorial, you will have
+completed your first step in the journey to being an Emacs master.
+
+** Emacs Keystrokes
+In the following keystrokes (or "Macros"), =C= denotes the =CONTROL=
+(or =CTRL=) key, and =M= denotes the =META= key. The =META= key is no
+longer present on many modern keyboards, so, often, =M= is obtained by
+pressing the =ESC= key.
+
+The keystroke =C-x= indicates that =CTRL= should be depressed while
+the =x= key is pressed and released. After =x= is released, the
+keystroke =C-x= is accomplished, and =CTRL= may also be released.
+
+The keystroke =M-x= is similar to =C-x=, but using the =META= key. In
+practice, I find that on a Mac, I must press *and release* the =ESC=
+key *before* I press the =x= key. Upon the release of =x=, the
+keystroke =M-x= is accomplished.
+
+Now, if you haven't already done so, start the built-in Emacs
+tutorial.
+
+** Summary of Useful Commands and Keystrokes
+Here, I will use the terms "command" and "keystroke" and "macro"
+interchangably.
+
+*** File Input/Output Commands
+The following commands are useful when editing files.
+|-----------+------------------------|
+| Macro     | Action                 |
+|-----------+------------------------|
+| =C-x C-x= | Save buffer to file.   |
+|-----------+------------------------|
+| =C-x C-c= | Quit Emacs             |
+|-----------+------------------------|
+| =C-a=     | Go to begining of line |
+|-----------+------------------------|
+| =C-e=     | Go to end of line      |
+|-----------+------------------------|
+| =C-x C-u= | Undo previous command  |
+
+
+*** Outlines and Lists
+
+Outline items are defined by starting a line with asterisks (=*=). The
+number of asterisks determines the level of the outline item, as
+follows:
+
+|---------------------+-----------------------------------------------|
+| Macro               | Action                                        |
+|---------------------+-----------------------------------------------|
+| =M+RET=             | Insert a new heading, item or row.            |
+|---------------------+-----------------------------------------------|
+| =OPT+RET=           | Insert a new heading, item or row. (Aquamacs) |
+|---------------------+-----------------------------------------------|
+| =OPT+(left arrow)=  | Promote outline/list item. (Aquamacs)         |
+|---------------------+-----------------------------------------------|
+| =OPT+(right arrow)= | Demote outline/list item. (Aquamacs)          |
+|                     |                                               |
+
+
+*** LaTeX Export Commands
+
+| Macro         | Action                    |
+|---------------+---------------------------  |
+| =C-c C-e l l= | Export to LaTeX document. |
+|---------------+---------------------------|
+| =C-c C-x C-l= | Render LaTeX equations.   |
+
+
+* Extending Emacs: elisp
+The great power of Emacs is the fact that it is extensible. Emacs is
+associated with its own programming languate, Emacs lisp (for short, I
+call it ``elisp''. I'm not sure if I just made this up or if I read it
+somewhere), and many extensions to Emacs are built on elisp. Ideally,
+you will not need to do much elisp programming; however, some
+extensions and customizations of Emacs require modifying your Emacs
+preferences file by adding snippets of elisp code.
+
+Often, the Emacs start-up file is your =~/.emacs= file. On Aquamacs,
+it is typically the
+=~/Library/Preferences/Aquamacs Emacs/Preferences.el= file.
+
+There are some canonical sources from which you can learn about elisp:
+- [[https://www.gnu.org/software/emacs/manual/html_node/eintr/]["An Introduction to Programming in Emacs Lisp"]] is distributed with
+  Emacs version 26.3. This document is verbose but conversational. I
+  read the first two or three chapters in [[https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf][PDF]] form, and with my background in
+  programming, I found the confidence to understand the basics of the
+  preferences file or to learn more as necessary.
+- [[https://www.gnu.org/software/emacs/manual/pdf/elisp.pdf]["GNU Emacs List Reference Manual"]] is probably a more concise manual
+  than the previous listed item. I haven't read it yet!
+
+
+* Extending Emacs: Org Mode
+[[https://orgmode.org][Org mode]] is a powerful extension for Emacs which has been called ``the
+scientist's note-taking system.'' Org mode enables many capabilties,
+which include--but are not limited to:
+- the taking of extsive, structured notes with support for
+  - Itemized and enumerated lists and outlines
+  - tables
+- links
+  - hyperlinks to Internet resources
+  - internal links to sections, figures, tables, code blocks, etc.
+- text markup
+- significant LaTeX support, including:
+  - math typesetting
+  - export-to-LaTeX
+  - references and bibliographies using bibTeX via the =org-ref=
+    package (and other packages)
+- embedding _executable_ code in documents in code blocks, with
+  syntax highlighting for numerous documents 
+- =*.org= document rendering on GitHub
+
+One of the best introductions to Org mode--- and the one that got me
+hooked--- is John Kitchin's [[https://youtu.be/fgizHHd7nOo][video]].
+
+
+* Extending Emacs: Org-ref
+
+** Introduction to =org-ref=
+=org-ref= is a powerfully-helpful package for creating and managing
+references in =org-mode=, with support for LaTeX export. Perhaps the
+best introduction to =org-ref= is in the form of John Kitchin's [[https://youtu.be/2t925KRBbFc][video]].
+
+** Installing =org-ref=
+Org-ref may be installed easily by (1) typing =M-x package-install= and
+then (2) specifiying =org-ref=. You may be required to perform an
+intervening safety/security step between (1) and (2) of confirming
+that you allow Emacs to communicate with the outside world by typing
+=Always=.
+
+Once =org-ref= is installed, you may need to make sure it's "required"
+in your Emacs start-up file.
+
+To get =org-ref= to work properly, I had to add
+#+BEGIN_SRC elisp
+(require 'org-ref)
+#+END_SRC
+to my preferences file.
+
+Additionally, =helm-bibtex= is a useful part of =org-ref=, so I found
+it helpful to also add to my preferences file:
+#+BEGIN_SRC elisp
+(require 'helm-bibtex)
+#+END_SRC
+
+

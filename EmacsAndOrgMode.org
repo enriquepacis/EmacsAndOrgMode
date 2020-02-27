@@ -209,3 +209,65 @@ it helpful to also add to my preferences file:
 #+END_SRC
 
 
+
+* LaTeX Export using Org Mode
+One of the reasons I like Org mode is that it allows LaTeX
+export. With a few physical keystrokes (=C-c C-e l l=), I can export my notes to a
+LaTeX document. I can also set up Emacs to export and view the
+document (=C-c C-e l o=), but I haven't got that one working yet (I
+need to set this up so that my LaTeX program performs the right number
+of LaTeX compiles and BibTeX compiles).
+
+** Fine Tuning
+
+*** Front Matter
+**** Adding a Page Break after the TOC
+ When using the =\documentclass{article}=, the default is for the
+ secions of content to immediately follow the table of contents (TOC)
+ without an intervening page break. A StackExchange thread discusses
+ how to [[https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc][add a page break]] after the TOC.
+
+ To do this, we add the following to our Emacs preference file:
+ #+BEGIN_SRC lisp
+ (setq org-latex-toc-command "\\tableofcontents \\clearpage")
+ #+END_SRC
+
+
+*** Modifying the LaTeX Preamble
+All LaTeX documents have a preamble, which is content between the
+=\documentclass{...}= command and the =\begin{document}= command. This
+is where much cusomization is implemented.
+
+Lines may be added to the preamble by using
+#+BEGIN_SRC latex
+#+LATEX_HEADER: ...
+#+END_SRC
+where =...= is a placeholder for a line of LaTeX preamble content.
+
+**** Adding Packages
+To add special capabilities beyond standard LaTeX, we can add
+packages. This is done in the preamble by adding a line with the
+=\usepackage{}= command.
+
+Some packages I find useful:
+
+| Package    | Description                                        |
+|------------+----------------------------------------------------|
+| =braket=   | Supports Dirac braket notation.                    |
+|------------+----------------------------------------------------|
+| =geometry= | Allows easy customization of layout (esp. margins) |
+|------------+----------------------------------------------------|
+| =mhchem=   | Supports chemical equations and formulas           |
+
+For Org mode LaTeX export, use the =#+LATEX_HEADER:= directive, and
+then add the desired preamble line.
+
+For example, I might add the following to an
+Org mode document:
+
+#+BEGIN_SRC
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LATEX_HEADER: \usepackage[version=4]{mhchem}
+#+LATEX_HEADER: \usepackage{braket}
+#+END_SRC
+

@@ -9,9 +9,11 @@
 - *Question:* Why Emacs?
 - /Answer:/ Because _Org mode_.
 - *Question:* Why Org mode?
-- /Answer:/ Because [[https://youtu.be/fgizHHd7nOo][Org mode is awesome]].
+- /Answer:/ Because [[https://youtu.be/fgizHHd7nOo][Org mode is awesome]]. This is a link to the John
+  Kitchin video that got me hooked. But there's a video of a
+  [[https://youtu.be/oJTwQvgfgMM][Google talk]] by Carsten Dominik, an Org mode author. 
 
-Check out the link above to discover just how powerful Org mode really is.
+Check out the videos above to discover just how powerful Org mode really is.
 
 * About This Document
 
@@ -38,7 +40,10 @@ in Org mode to write this or other documents. Reasons include:
 | Software  | Platforms         |
 |-----------+-------------------|
 | [[http://aquamacs.org][Aquamacs]]  | Mac               |
+|-----------+-------------------|
 | [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]] | Windows/Mac/Linux |
+|-----------+-------------------|
+| [[https://www.spacemacs.org/][spacemacs]] | Windows/Mac/Linux |
 
 ** Additional Notes
 
@@ -50,6 +55,9 @@ Mac OS X comes with a version of Emacs installed, but as I first
 started exploring Emacs, I found that the built-in version did not
 support Org mode. Therefore, I favored Aquamacs, because it supported
 Org mode and many of the other prerequisites for Org mode.
+
+spacemacs appears to not be an actual Emacs program, but rather just a
+layer that introduces some nice custom preferences.
 
 
 * Getting Started With Emacs
@@ -143,11 +151,44 @@ which include--but are not limited to:
 - =*.org= document rendering on GitHub
 
 One of the best introductions to Org mode--- and the one that got me
-hooked--- is John Kitchin's [[https://youtu.be/fgizHHd7nOo][video]].
+hooked--- is John Kitchin's [[https://youtu.be/fgizHHd7nOo][video]]. There's also a very famous [[https://youtu.be/oJTwQvgfgMM][Google
+talk]] by Carsten Dominik, the author of Org mode.
 
 ** Summary of Useful Org Mode Commands and Keystrokes
 
 The following useful commands are unique to Org mode.
+
+*** Code Blocks
+
+| Macro           | Action                     |
+|-----------------+----------------------------|
+| =C-c C-c=       | Execute code block         |
+|-----------------+----------------------------|
+| =C-c C-v t=     | Tangle all code blocks     |
+|-----------------+----------------------------|
+| =C-u C-c C-v t= | Tangle a single code block |
+|                 |                            |
+
+
+*** LaTeX Export Commands
+
+| Macro         | Action                    |
+|---------------+---------------------------|
+| =C-c C-e l l= | Export to LaTeX document. |
+|---------------+---------------------------|
+| =C-c C-x C-l= | Render LaTeX equations.   |
+
+
+*** Navigation
+
+| Macro     | Action                            |
+|-----------+-----------------------------------|
+| =M-v=     | Page up                           |
+|-----------+-----------------------------------|
+| =C-v=     | Page down                         |
+|-----------+-----------------------------------|
+| =C-x C-o= | Open link (file, hyperlink, etc.) |
+|           |                                   |
 
 *** Outlines and Lists
 
@@ -168,18 +209,127 @@ follows:
 |                     |                                               |
 
 
-*** LaTeX Export Commands
+** Code Blocks in Org Mode
 
-| Macro         | Action                    |
-|---------------+---------------------------|
-| =C-c C-e l l= | Export to LaTeX document. |
-|---------------+---------------------------|
-| =C-c C-x C-l= | Render LaTeX equations.   |
+Code blocks may be:
+- executed in org documents
+  - Key bindings: =C-c C-c=
+- written to the file system using =org-babel-tangle=. The Org-mode
+  manual has [[https://orgmode.org/manual/Extracting-Source-Code.html][instructions on tangling code]].
+  A code block can be tangled (written to the file system) if the
+  first line includes the =:tangle= instruction. An example of	this
+  might be: 
+
+  #+BEGIN_VERBATIM
+  #+BEGIN_SRC language :tangle filename
+  < source code >
+  #+END_SRC
+  #+END_VERBATIM
+  
+  Then, the =org-babel-tangle= command may be invoked using =C-u C-c
+  C-v t= (tangle a single code block) or =C-c C-v t= (tangle all code blocks).
+
+*** Python in Org Mode
+
+**** Setup
+
+To enable executable Python code blocks in emacs, I added the
+following to my =Preferences.el= file:
+#+NAME: code-preferences-include-python
+#+BEGIN_SRC elisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+
+(setq org-babel-python-command "/Users/blair/anaconda3/bin/python3")
+#+END_SRC
+
+This code snippet serves two functions:
+1. It adds code block support for Python
+2. It specifies the path to the specific installation of Python which
+   we desire to use.
+
+**** Pythonic Hello World
+
+This is an example of a basic Python script executed in Org mode:
+#+begin_src python :results output
+print('hello world')
+#+end_src
+
+#+RESULTS:
+: hello world
+
+**** Pythonic Hello World (tangled)
+
+Now, I make a code block that can be tangled:
+#+NAME: tangle-python-hello-world
+#+BEGIN_SRC python :tangle hello_world_tangle.py
+print("hello world. tangled.")
+#+END_SRC
+
+This exports the code to a file called =hello_world_tangle.py=. To run
+the tangled file, a shell-script ('sh') code block like this may be
+used:
+#+NAME: run-tangled-python-script
+#+BEGIN_SRC sh
+python hello_world_tangle.py
+#+END_SRC
+Note: this works just fine on kodiak, but it doesn't work on my
+Mac. On my Mac, I get =Symbol's function definition is void: org-babel-get-header=
+
+To use a script like ref:run-tangled-python-script, something like the
+following should be included in your preferences file:
+#+BEGIN_SRC elisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (sh . t)))
+#+END_SRC
+This adds support for shell scripts in the code block.
 
 
+**** Troubleshooting
 
+***** Code blocks do not evaluate
+ I had an issue where I would try to evaluate code blocks, and then
+ Emacs would tell me something like "Evaluation of this python code
+ block is disabled." I then found a [[https://www.reddit.com/r/emacs/comments/820ny1/code_block_eval_disabled/][reddit discussion]] telling me that
+ if I go to the org-mode package folder and delete any compiled elisp
+ files (*.elc) and restart Aquaemacs, I can once again evaluate code
+ blocks. 
 
-* Extending Emacs: Org-ref
+***** Python Code Blocks always return ": None" in the output
+It is helpful to add =:results output= in the first line of the code
+block. A [[https://emacs.stackexchange.com/questions/17926/python-org-mode-source-block-output-is-always-none][StackExchange discussion]] exists on this topic.
+
+*** MATLAB in Org Mode
+My source here is [[http://gewhere.github.io/blog/2017/12/19/setup-matlab-in-emacs-and-babel-orgmode/][Georgios Diapoulis' blog]]
+
+**** Setup
+To set up MATLAB with Emacs, we need a shell script. Diapoulis
+recommends a file called =matlab_emacs_wrapper=, with the following
+listing (of course, I have modified it for my computer):
+#+BEGIN_SRC bash
+#!/bin/bash
+# https://ch.mathworks.com/matlabcentral/answers/319655-why-does-matlab-r2016b-crash-when-launched-from-matlab-emacs?
+shell_stack_size=$(ulimit -s)
+
+adjusted_stack_size=$[4*((($shell_stack_size-1)/4)+1)]
+
+ulimit -s $adjusted_stack_size && /Applications/MATLAB_R2020a.app/bin/matlab $@
+#+END_SRC
+
+We make this executable by typing in the command line
+#+BEGIN_SRC
+chmod 755 matlab_emacs_wrapper
+#+END_SRC
+and then executing it using
+#+BEGIN_SRC
+
+#+END_SRC
+Diapoulis recommends checking to see if the sc
+
+* Extending Emacs Org mode: Org-ref
 
 ** Introduction to =org-ref=
 =org-ref= is a powerfully-helpful package for creating and managing
@@ -271,3 +421,7 @@ Org mode document:
 #+LATEX_HEADER: \usepackage{braket}
 #+END_SRC
 
+*** Beamer
+Beamer is a LaTeX class for presentations. The org-mode reference has
+a section on beamer, but there also is a nice page on orgmode.org
+titled "[[https://orgmode.org/worg/exporters/beamer/ox-beamer.html][Beamer presentations using the new export engine]]".

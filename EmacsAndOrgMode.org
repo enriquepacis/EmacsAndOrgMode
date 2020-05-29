@@ -303,40 +303,93 @@ It is helpful to add =:results output= in the first line of the code
 block. A [[https://emacs.stackexchange.com/questions/17926/python-org-mode-source-block-output-is-always-none][StackExchange discussion]] exists on this topic.
 
 *** MATLAB in Org Mode
-My source here is [[http://gewhere.github.io/blog/2017/12/19/setup-matlab-in-emacs-and-babel-orgmode/][Georgios Diapoulis' blog]]
+My source here are:
+1. [[http://gewhere.github.io/blog/2017/12/19/setup-matlab-in-emacs-and-babel-orgmode/][Georgios Diapoulis' blog]]
+2. A [[https://sourceforge.net/p/matlab-emacs/mailman/message/36089463/][SourceForge post]] by Cumhur Erkut
 
 **** Setup
-To set up MATLAB with Emacs, we need a shell script. Diapoulis
-recommends a file called =matlab_emacs_wrapper=, with the following
-listing (of course, I have modified it for my computer):
-#+BEGIN_SRC bash :tangle ~/matlab_emacs_wrapper :shebang "#!/bin/bash" :padline no
-# https://ch.mathworks.com/matlabcentral/answers/319655-why-does-matlab-r2016b-crash-when-launched-from-matlab-emacs?
-shell_stack_size=$(ulimit -s)
-
-adjusted_stack_size=$[4*((($shell_stack_size-1)/4)+1)]
-
-ulimit -s $adjusted_stack_size && /Applications/MATLAB_R2020a.app/bin/matlab $@
-#+END_SRC
-Note:
-- If I tangle this to the file system, Emacs recognizes that it has a
-  shebang and makes it executable
-- If I copy and paste this into the file system, then I need to make
-  it executable by typing in the command line
-  #+BEGIN_SRC sh
-  chmod 755 ~/matlab_emacs_wrapper
-  #+END_SRC
-
-Diapoulis recommends running the script to see if you can make MATLAB
-run properly. Notes:
-- The script ran from the command prompt
-- The script did not run from an Emacs code block
+Step zero is to have a valid, licensed installation of MATLAB. To set
+up MATLAB with Emacs, do the following: 
+1. Install the =matlab-mode= package for Emacs using =M-x
+   package-install= followed by ENTER, followed by =matlab-mode=
+2. Create an Emacs wrapper for MATLAB.
+   1. The following code block defines an Emacs wrapper for
+      MATLAB. It's customized for my computer, so you should customize
+      the path to your MATLAB program and tangle it to your file space
+      as you see fit: 
+      #+begin_src sh :tangle ~/matlab_emacs_wrapper :shebang "#!/bin/bash" :padline no
+      # https://ch.mathworks.com/matlabcentral/answers/319655-why-does-matlab-r2016b-crash-when-launched-from-matlab-emacs?
+      shell_stack_size=$(ulimit -s)
+      
+      adjusted_stack_size=$[4*((($shell_stack_size-1)/4)+1)]
+      
+      ulimit -s $adjusted_stack_size && /Applications/MATLAB_R2020a.app/bin/matlab $@
+      #+end_src
+      Note:
+      1. If I tangle this to the file system, Emacs recognizes that it
+         has a shebang and makes it executable
+      2. If I copy and paste this into the file system, then I need to
+         make it executable by typing in the command line
+         #+BEGIN_SRC sh
+         chmod 755 ~/matlab_emacs_wrapper
+         #+END_SRC
+   2. Diapoulis recommends running the script to see if you can
+      make MATLAB run properly. Notes:
+      1. The script ran from the command prompt for me
+      2. The script did not run from an Emacs code block
+3. Add the following to your Emacs preferences file:
+   1. Define the =matlab-shell= command
+      #+begin_verbatim elisp
+      ;; establish/customize the matlab-shell command
+      (setq matlab-shell-command "/Applications/MATLAB_R2020a.app/matlab")
+      (customize-set-variable 'matlab-shell-command
+      "~/matlab_emacs_wrapper")
+      #+end_verbatim
+   2. Load =org-babel= support for MATLAB by adding =(matlab . t)= to
+      your =org-babel-do-load-languages= statement. Since I want
+      support for Python, shell and MATLAB, my statement looks like this:
+      #+begin_verbatim elisp
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((python . t)
+         (sh . t)
+         (matlab . t)))
+      #+end_verbatim
+4. Save and close all Emacs work and restart Emacs. This will load
+   your new preferences.
+5. Upon restarting, if you set things up properly, 
 
 *** Testing
 
 #+BEGIN_SRC matlab
 %% Here is a MATLAB region
 disp('hello world')
+%% Numerical result
+x = 5; % output supressed
+y = 7 % output not suppressed
+z = x+y % output not suppressed
 #+END_SRC
+
+#+RESULTS:
+#+begin_example
+%% Here is a MATLAB region
+disp('hello world')
+hello world
+%% Numerical result
+x = 5;
+y = 7
+
+y =
+
+     7
+z = x+y
+
+z =
+
+    12
+#+end_example
+
+
 
 This doesn't work for me. I get an error saying, "Autoloading failed
 to define function matlab-shell"

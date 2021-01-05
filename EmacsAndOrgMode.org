@@ -15,18 +15,6 @@
 
 Check out the videos above to discover just how powerful Org mode really is.
 
-* About This Document
-
-** Viewing This Document
-This document was written using the Emacs in Org mode. It is best
-viewed in Emacs Org mode. Of course, if you don't have Emacs Org mode
-installed or set up just yet, view this document in GitHub. Then, as
-soon as you can use Emacs, start viewing it in Emacs so that you can
-have its full functionality. On GitHub, code-blocks don't render well,
-output doesn't render well, and code blocks don't execute. In Emacs
-Org mode, all that functionality is available to you.
-
-** Why Emacs?
 While the learning curve for using Emacs is very steep, Emacs is very powerful
 because it is extensible. There are very good reasons for using Emacs
 in Org mode to write this or other documents. Reasons include:
@@ -43,6 +31,14 @@ in Org mode to write this or other documents. Reasons include:
   - Tables are easy to create and can function as spreadsheets
   - Hyperlinks are easy to include
 
+* Viewing This Document
+This document was written using the Emacs in Org mode. It is best
+viewed in Emacs Org mode. Of course, if you don't have Emacs Org mode
+installed or set up just yet, view this document in GitHub. Then, as
+soon as you can use Emacs, start viewing it in Emacs so that you can
+have its full functionality. On GitHub, code-blocks don't render well,
+output doesn't render well, and code blocks don't execute. In Emacs
+Org mode, all that functionality is available to you.
 
 * Obtaining Emacs
 

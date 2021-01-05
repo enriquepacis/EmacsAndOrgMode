@@ -37,13 +37,17 @@ in Org mode to write this or other documents. Reasons include:
 
 * Obtaining Emacs
 
-| Software  | Platforms         |
-|-----------+-------------------|
-| [[http://aquamacs.org][Aquamacs]]  | Mac               |
-|-----------+-------------------|
-| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]] | Windows/Mac/Linux |
-|-----------+-------------------|
-| [[https://www.spacemacs.org/][spacemacs]] | Windows/Mac/Linux |
+| Software          | Platforms         |
+|-------------------+-------------------|
+| [[http://aquamacs.org][Aquamacs]]          | Mac               |
+|-------------------+-------------------|
+| [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Mitsuharu's Emacs]] | Mac               |
+|-------------------+-------------------|
+| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]]         | Windows/Mac/Linux |
+|-------------------+-------------------|
+| [[https://github.com/jkitchin/scimax][scimax]]            | Windows/Mac/Linux |
+|-------------------+-------------------|
+| [[https://www.spacemacs.org/][spacemacs]]         | Windows/Mac/Linux |
 
 ** Additional Notes
 
@@ -54,7 +58,9 @@ notes as much as possible.
 Mac OS X comes with a version of Emacs installed, but as I first
 started exploring Emacs, I found that the built-in version did not
 support Org mode. Therefore, I favored Aquamacs, because it supported
-Org mode and many of the other prerequisites for Org mode.
+Org mode and many of the other prerequisites for Org mode. I later
+tried Mitsuaru's Emacs, but I found I liked the Mac functionalities of
+Aquamacs much better, so I returned to Aquamacs.
 
 spacemacs appears to not be an actual Emacs program, but rather just a
 layer that introduces some nice custom preferences.
@@ -92,7 +98,7 @@ tutorial.
 Here, I will use the terms "command" and "keystroke" and "macro"
 interchangably.
 
-*** File Input/Output Commands
+*** File Editing Commands
 The following commands are useful when editing files.
 |-----------+------------------------|
 | Macro     | Action                 |
@@ -107,20 +113,67 @@ The following commands are useful when editing files.
 |-----------+------------------------|
 | =C-x C-u= | Undo previous command  |
 
-* Extending Emacs: elisp
+* Extending Emacs: Lisp
 The great power of Emacs is the fact that it is extensible. Emacs is
-associated with its own programming languate, Emacs lisp (for short, I
-call it ``elisp''. I'm not sure if I just made this up or if I read it
-somewhere), and many extensions to Emacs are built on elisp. Ideally,
-you will not need to do much elisp programming; however, some
-extensions and customizations of Emacs require modifying your Emacs
-preferences file by adding snippets of elisp code.
+associated with its own programming language, Emacs Lisp.
+Many extensions to Emacs are built on Lisp. Lisp is
+short for LISt Processing, and at the core of the language syntax is
+the manipulation/processing of lists. Ideally, you will not need to do
+much Lisp programming; however, some extensions and customizations of
+Emacs require modifying your Emacs preferences file by adding snippets
+of Lisp code.
 
+Your preferences file is a file of Lisp commands that is executed on
+Emacs start-up. It may assign values to variables that will be used
+throughout your Emacs session. If you change your preferences file,
+you must close Emacs and then restart it for your modifications to
+take effect.
+
+** Finding Your Emacs Preferences File
+   To customize Emacs, you'll often have to add code to your preferences
+   file. This is a very important file, then, and you must be able to
+   find it (not always easy!). When you first install Emacs, you may not
+   even have a preferences file, so it may be up to you to create one.
+
+   Typically, Emacs looks for the preferences file in several
+   locations. I discuss some platform specifics below.
+
+*** Windows
+On Windows, [[https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html][these instructions]] tell you where to look for your
+preferences file, or where to put it if you have to make one. You may
+initially use any text editor to create/edit your preferences
+file. Later, if you become drunk with the power of Emacs, you may want
+to use only Emacs to edit it, and that is just fine.
+
+_Warning_. On Windows, you must beware of hidden file extensions. For
+example, you may create a preferences file =init.el= or
+=Preferences.el= and then save it in an appropriate place. If Emacs is
+unable to locate your file even when it is rightly located, it may be
+because whatever Windows text editor you are using has appended a file
+extension =*.txt= so that Windows "knows" it's a text file. In this
+case, Emacs cannot find the preferences file it is seeking, because it
+doesn't exist! To fix this, you can make Windows show hidden file
+extensions. Once you have done this, you can use the Explorer to
+naviate to the file and remove the =*.txt= extension. Then, start or
+restart Emacs, and it should find the rightly-named and rightly-placed
+start-up file.
+
+*** Mac
 Often, the Emacs start-up file is your =~/.emacs= file. On Aquamacs,
 it is typically the
-=~/Library/Preferences/Aquamacs Emacs/Preferences.el= file.
+=~/Library/Preferences/Aquamacs Emacs/Preferences.el= file. In the
+Mitsuharu version of Emacs on MacPorts, it creates a =~/.emacs.d/=
+directory, and I am able to choose whether I want to establish my
+preferences in =~/.emacs=, =~/.emacs.el=, or =~/.emacs.d/init.el=. A
+good  source of information on initialization/customization is the
+Emacs manual section on the /Emacs Initialization File/.
 
-There are some canonical sources from which you can learn about elisp:
+*** UNIX/Linux
+The instructions here are the same as Mac, for the Mac OS is built on
+a UNIX system.
+
+** Learning More about Lisp
+There are some canonical sources from which you can learn about Lisp:
 - [[https://www.gnu.org/software/emacs/manual/html_node/eintr/]["An Introduction to Programming in Emacs Lisp"]] is distributed with
   Emacs version 26.3. This document is verbose but conversational. I
   read the first two or three chapters in [[https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf][PDF]] form, and with my background in
@@ -129,8 +182,119 @@ There are some canonical sources from which you can learn about elisp:
 - [[https://www.gnu.org/software/emacs/manual/pdf/elisp.pdf]["GNU Emacs List Reference Manual"]] is probably a more concise manual
   than the previous listed item. I haven't read it yet!
 
+Useful keystrokes:
+|-----------+----------------------------------------|
+| =C-x C-e= | Evaluate list (cursor at end of list). |
+|-----------+----------------------------------------|
+
+** Emacs Lisp Basics
+
+*** Basic Lists
+- A list in Lisp is delimited by parentheses, =(= and =)=
+  - A list is populated with elements called /atoms/.
+  - Atoms in a list are separated using whitespace, and no whitespace
+    is needed between an atom and a parenthesis
+  - Atoms may be letters, numbers, strings, or even other lists
+- The simplest list possible has no atoms: =()=.
+- A list can provide a Lisp /function/
+  - A function can be /evaluated/ (executed) by placing the cursor at
+    the end of the list and typing =C-x C-e=
+  - A non-function list is formed by typing an apostrophe (='=) just
+    before the open parenthesis, i.e., ='( ... )=
+    - The apostrophe is called a /quote/, so such a list is a /quoted/ list
+- A single quote (='=) tells the Lisp interpeter to return the
+  following expression as written, and not to evaluate it as a
+  function or variable
+- Strings are formed using double quotes (="..."=)
+
+This function has three atoms:
+#+name: lst-function-00
+(+ 2 2)
+To evaluate it, place the cursor just after the closing parenthesis
+and then type =C-x C-e=. If you evaluate it, you'll see the an
+output in the minibuffer that looks like this:
+#+begin_verbatim text
+4 (#o4, #x4, ?\C-d)
+#+end_verbatim
+The instruction given here was an addition operation with an augend of
+2 and an addend of 2. The output is given as 4 in decimal, as well as
+in octal and in hexadecimal.
+
+The position of the cursor is important. If you place the cursor after
+either of the "2" symbols in the list, you'll see "2" in the
+minibuffer upon evaluating (=C-x C-e=. If you place the cursor after
+the end of the list, you'll evaluate the entire function.
+
+Here is an example of a non-functional list:
+'(this is a non-functional list)
+If you evaluate it, it just gets echoed to the minibuffer. This
+non-functional list is a /quoted/ list.
+
+Here is an example of a nested list:
+(+ 2 (+ 3 4))
+
+In this example, we use the =concat= function to join two strings:
+(concat "cat" "dog")
+
+*** Function Syntax
+
+The basic syntax for a Lisp function is:
+#+begin_verbatim
+(symbol atom2 atom3 ...)
+#+end_verbatim
+Here, the first atom is =symbol=, some atom that specifies how the
+rest of the list is to be processed. In list [[lst-function-00]], we used
+"+" as the symbol, so we got an addition operation.
+
+A symbol can be a function definition with a set of instructions, as
+in the case of "+"; or it can be a variable, with a value assigned to
+it. A symbol may also have both a function and a value.
+
+*** The =message= function
+The =message= function can be used to echo a string to the minibuffer:
+(message "hello world")
+
+If we wish to also export a numerical value using =message=, we can
+use the =number-to-string= function:
+(message (concat "My favorite number is " (number-to-string 7)))
+
+A more concise way to do it is to use a formatted string, which as
+placehoders for follow-on arguments:
+(message "My favorite number is %d" 7)
+Here, =%d= is a placeholder for the integer 7.
+
+Similarly, =%s= can be a placeholder for a string:
+(message "His name is %s." "Sargon")
+
+*** Variables and the =set= function
+The value of a variable may be set using the =set=, =setq= or =let=
+functions.
+
+To declare a variable, we define a symbol using an apostrophe:
+='variable=
+
+Thus to declare a variable =x= and assign its value, I can use
+(set 'x 2)
+I can then use the variable in another operation:
+(message "The value of x is: %d" x)
+
+*** Variables and the =setq= function
+
+When learning to set Emacs preferences, =setq= is ubiquitous in
+StackExchange posts. When using the =set= function, we typcially quote
+the second atom,  which declares a symbol to hold a value. The =setq=
+function is similar, but it allows you to set a value without quoting
+the second atom. In fact, the =q= in =setq= stands for "quote". Therefore,
+(setq y 3)
+is equivalent to 
+(set 'y 3)
+
+We can use =setq= to define several variables in one list:
+(setq a "hello" b "world")
 
 * Extending Emacs: Org Mode
+
+** Introduction to Org Mode
 [[https://orgmode.org][Org mode]] is a powerful extension for Emacs which has been called ``the
 scientist's note-taking system.'' Org mode enables many capabilties,
 which include--but are not limited to:
@@ -209,7 +373,7 @@ follows:
 |                     |                                               |
 
 
-** Code Blocks in Org Mode
+* Code Blocks in Org Mode
 
 Code blocks may be:
 - executed in org documents
@@ -229,9 +393,9 @@ Code blocks may be:
   Then, the =org-babel-tangle= command may be invoked using =C-u C-c
   C-v t= (tangle a single code block) or =C-c C-v t= (tangle all code blocks).
 
-*** Python in Org Mode
+** Python in Org Mode
 
-**** Setup
+*** Setup
 
 To enable executable Python code blocks in emacs, I added the
 following to my =Preferences.el= file:
@@ -248,8 +412,13 @@ This code snippet serves two functions:
 1. It adds code block support for Python
 2. It specifies the path to the specific installation of Python which
    we desire to use.
+   1. This is done using the =(setq ...= function
+   2. The =(setq ...= function may not be necessary in Windows. If you
+      would like to remove it easily, you can comment it out by
+      prepending two semicolons: =;; (setq org-...=. This will turn
+      everything that follows the semicolons into a comment.
 
-**** Pythonic Hello World
+*** Pythonic Hello World
 
 This is an example of a basic Python script executed in Org mode:
 #+begin_src python :results output
@@ -259,7 +428,7 @@ print('hello world')
 #+RESULTS:
 : hello world
 
-**** Pythonic Hello World (tangled)
+*** Pythonic Hello World (tangled)
 
 Now, I make a code block that can be tangled:
 #+NAME: tangle-python-hello-world
@@ -288,26 +457,36 @@ following should be included in your preferences file:
 This adds support for shell scripts in the code block.
 
 
-**** Troubleshooting
+*** Troubleshooting
 
-***** Code blocks do not evaluate
- I had an issue where I would try to evaluate code blocks, and then
- Emacs would tell me something like "Evaluation of this python code
- block is disabled." I then found a [[https://www.reddit.com/r/emacs/comments/820ny1/code_block_eval_disabled/][reddit discussion]] telling me that
- if I go to the org-mode package folder and delete any compiled elisp
- files (*.elc) and restart Aquaemacs, I can once again evaluate code
- blocks. 
+**** Code blocks do not evaluate
+I had an issue where I would try to evaluate code blocks, and then
+Emacs would tell me something like "Evaluation of this python code
+block is disabled." I then found a [[https://www.reddit.com/r/emacs/comments/820ny1/code_block_eval_disabled/][reddit discussion]] telling me that
+if I go to the org-mode package folder and delete any compiled Lisp
+files (*.elc) and restart Aquaemacs, I can once again evaluate code
+blocks. 
 
-***** Python Code Blocks always return ": None" in the output
+**** Python Code Blocks always return ": None" in the output
 It is helpful to add =:results output= in the first line of the code
 block. A [[https://emacs.stackexchange.com/questions/17926/python-org-mode-source-block-output-is-always-none][StackExchange discussion]] exists on this topic.
 
-*** MATLAB in Org Mode
+** MATLAB in Org Mode
+
+I actually don't recommend this. I tried it on my Mac, and it didn't
+go well. This procedure changed the text editor for MATLAB on my
+Mac. Then, when I wanted to use MATLAB on my Mac, MATLAB threw an
+error saying it could not find my text editor. I had to reset the text
+editor to the default so that I could edit scripts in MATLAB once
+again.
+
+If you must use MATLAB code blocs in Emacs Org mode, then read on.
+ 
 My source here are:
 1. [[http://gewhere.github.io/blog/2017/12/19/setup-matlab-in-emacs-and-babel-orgmode/][Georgios Diapoulis' blog]]
 2. A [[https://sourceforge.net/p/matlab-emacs/mailman/message/36089463/][SourceForge post]] by Cumhur Erkut
 
-**** Setup
+*** Setup
 Step zero is to have a valid, licensed installation of MATLAB. To set
 up MATLAB with Emacs, do the following: 
 1. Install the =matlab-mode= package for Emacs using =M-x
@@ -361,38 +540,52 @@ up MATLAB with Emacs, do the following:
 
 *** Testing
 
-#+BEGIN_SRC matlab
-%% Here is a MATLAB region
-disp('hello world')
-%% Numerical result
-x = 5; % output supressed
-y = 7 % output not suppressed
-z = x+y % output not suppressed
-#+END_SRC
+ #+BEGIN_SRC matlab
+ %% Here is a MATLAB region
+ disp('hello world')
+ %% Numerical result
+ x = 5; % output supressed
+ y = 7 % output not suppressed
+ z = x+y % output not suppressed
+ #+END_SRC
 
-#+RESULTS:
-#+begin_example
-%% Here is a MATLAB region
-disp('hello world')
-hello world
-%% Numerical result
-x = 5;
-y = 7
+ #+RESULTS:
+ #+begin_example
+ < M A T L A B (R) >
+                   Copyright 1984-2020 The MathWorks, Inc.
+                    R2020a (9.8.0.1323502) 64-bit (maci64)
+                              February 25, 2020
 
-y =
+ 
+ To get started, type doc.
+ For product information, visit www.mathworks.com.
+ 
+ %>> % Here is a MATLAB region
+ disp('hello world')
+ hello world
+ %% Numerical result
+ x = 5; % output supressed
+ y = 7 % output not suppressed
 
-     7
-z = x+y
+ y =
 
-z =
+      7
+ z = x+y % output not suppressed
 
-    12
-#+end_example
+ z =
+
+     12
+ 'org_babel_eoe'
+
+ ans =
+
+     'org_babel_eoe'
+ #+end_example
 
 
 
-This doesn't work for me. I get an error saying, "Autoloading failed
-to define function matlab-shell"
+ This doesn't work for me. I get an error saying, "Autoloading failed
+ to define function matlab-shell"
 * Extending Emacs Org mode: Org-ref
 
 ** Introduction to =org-ref=
@@ -432,20 +625,23 @@ document (=C-c C-e l o=), but I haven't got that one working yet (I
 need to set this up so that my LaTeX program performs the right number
 of LaTeX compiles and BibTeX compiles).
 
-** Fine Tuning
+** Adjustments to the Preamble
+Here, I discuss using Org mode commands to set LaTeX documentclass
+options/properties and set commands in the preamble.
 
-*** Front Matter
-**** Adding a Page Break after the TOC
- When using the =\documentclass{article}=, the default is for the
- secions of content to immediately follow the table of contents (TOC)
- without an intervening page break. A StackExchange thread discusses
- how to [[https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc][add a page break]] after the TOC.
+*** Document Options
 
- To do this, we add the following to our Emacs preference file:
- #+BEGIN_SRC lisp
- (setq org-latex-toc-command "\\tableofcontents \\clearpage")
- #+END_SRC
+The title may be set using
+#+begin_verbatim text
+#+title: Some Title
+#+end_verbatim
 
+Sometimes, under LaTeX export, it is desirable to suppress document
+features such as the author name, date, or the table of contents. This
+may be done by setting the following options:
+#+begin_verbatim
+#+options: author:nil title:nil date:nil
+#+end_verbatim
 
 *** Modifying the LaTeX Preamble
 All LaTeX documents have a preamble, which is content between the
@@ -485,6 +681,19 @@ Org mode document:
 #+LATEX_HEADER: \usepackage{braket}
 #+END_SRC
 
+*** Adding a Page Break after the TOC
+When using the =\documentclass{article}=, the default is for the
+secions of content to immediately follow the table of contents (TOC)
+without an intervening page break. A StackExchange thread discusses
+how to [[https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc][add a page break]] after the TOC.
+
+To do this, we add the following to our Emacs preference file:
+#+BEGIN_SRC lisp
+(setq org-latex-toc-command "\\tableofcontents \\clearpage")
+#+END_SRC
+
+
+
 *** Beamer
 Beamer is a LaTeX class for presentations. The org-mode reference has
 a section on beamer, but there also is a nice page on orgmode.org
@@ -499,6 +708,20 @@ favourite illustrating system (so much so that I use the British
 spelling of /favorite/). I learned from a blogger (I learned
 after my use of /favourite/ that the blogger is British) that we can
 [[https://www.homepages.ucl.ac.uk/~ucahjde/blog/tikz.html][make LaTeX code blocks that produce TikZ graphics]].
+
+Note: this didn't work well for me, since my LaTeX installation
+doesn't have imagemagik. This is a vital component for converting TikZ
+output (pdf) to another format (png, jpg, etc.). Org mode doesn't
+render PDF in the buffer well. It usually ends up as text for me.
+
+Still, TikZ is important for me, since I use it to make scalable
+vector graphics (SVG) for illustrations. I also use it to make
+composite images/illustrations. If you have imagemagik installed, read
+on, and you may be able to find success where I have not.
+
+An alternate method for using Org mode to generate TikZ illustrations
+is in the next section, so you may wish to skip the rest of this
+section.
 
 *** Setup
 The blog post or a search leads us to the Org manual page on
@@ -547,6 +770,7 @@ few adaptations - from the blog post, I have:
 \end{tikzpicture}
 #+END_src
 
+
 Unfortunately, I didn't get the SVG to render well in Org mode. It
 probably would render well - as intended - in the blogger's html
 result.
@@ -579,14 +803,18 @@ name, so I renamed it to the desired name.
 #+RESULTS:
 
 To display the PDF result here, we use:
+
 #+CAPTION: tikz caption
 #+LABEL: fig:tikz
 #+RESULTS:
-[[./img/fsa.pdf]]
+# ()convertfrompdf:t
+[[./img/fsa.png]]
 The other problem is that this link opens in Adobe Acrobat, and not in
 an Emacs buffer.
 
-
+Check to see if imagemagick is installed:
+(executable-find "convert") - this returns "nil"
+(image-type-available-p 'imagemagick)
 I also tried exporting to =eps=, but that didn't work so well.
 
 #+HEADER: :file img/contour.eps :imagemagick yes
@@ -599,3 +827,104 @@ I also tried exporting to =eps=, but that didn't work so well.
 \filldraw (1.5,0) circle[radius=1mm];
 \end{tikzpicture}
 #+END_src
+
+** TikZ and Org Mode - Work-around for Lack of Imagemagik
+
+My workaround for for making TikZ graphics without imagemagik is to
+write a LaTeX script in an Emacs Org mode (Python) code block. In this
+code block, I form a =subprocess.Popen= object that creates a pipe to
+LaTeX. The pipe is prepared so that I specify the LaTeX command as
+well as an output file name. Then, I stream the LaTeX script through the
+LaTeX pipe using the =subprocess.communicate= method. This allows
+LaTeX (actually, PDFTeX, in my case) to process the commands in the
+LaTeX script, although the script is never a file written to the file
+space.
+
+This is a powerful method that can be generalized to any
+program available on your computer. In this way, you can stream MATLAB
+scripts to MATLAB, or you can launch high-performance computing (HPC)
+jobs by streaming a job submission script to a submission program,
+such as =qsub=.
+
+An example script is as follows:
+#+name: script_tikz_four_dot_states
+#+begin_src python :exports none :results none
+'''
+This Python script creates a stand-alone LaTeX figure.
+'''
+from pathlib import Path # for creating directories
+import subprocess as sp # for running programs, making pipes
+import os # file-system tools
+
+homedir = os.getcwd()
+targetdir = os.path.join(homedir, 'img')
+# create the targetdir if it doesn't exist
+Path(targetdir).mkdir(exist_ok=True)
+
+jobname = 'basic_TikZ_fig' # output file name (no extension)
+pdftex = '/Library/TeX/texbin/pdflatex' # path to my PDFTeX program
+
+'''
+Now, I define a LaTeX script. The Python string requires
+me to use "\\" whenever I want "\" in the LaTeX script.
+
+This script simply draws a square and then partitions it
+into four smaller squares.
+'''
+
+tex_script = """\\documentclass{standalone}
+\\usepackage{tikz, adjustbox}
+
+\\begin{document}
+
+\\begin{tikzpicture}[scale=0.825]
+   \\draw (-1, -1) rectangle (1, 1);
+   \\draw (0, -1) -- (0, 1);
+   \\draw (-1, 0) -- (1, 0);
+\\end{tikzpicture}
+
+\\end{document}
+#end"""
+
+# Change directory to targetdir, run commands there
+os.chdir(targetdir)
+
+'''
+   Form the PDFTeX pipe, p.
+
+   We can think of the pipe as:
+   {pdftex} -jobname=basic_TikZ_fig
+
+   Here, {pdftex} is actually the full path to my PDFTeX program:
+   '/Library/TeX/texbin/pdflatex', and -jobname=basic_TikZ_fig is a PDFTeX
+   option that specifies the output file name (this option is particular to
+   PDFTeX and may not apply if you are trying to generalize this technique
+   to another program).
+
+   Note that no input script is specified. We will stream the input script
+   through our pipe (p) later, once p is defined. This will be done by
+   invoking the p.communicate() method. If we stream the script to the
+   pipe, there is no need to write it to the file system.
+'''
+cmdlist = [pdftex, f'-jobname={jobname}']
+p = sp.Popen(cmdlist,
+             stdin=sp.PIPE,
+	         stdout=sp.PIPE,
+	         stderr=sp.PIPE,
+	         universal_newlines=True)
+
+# run the script - capture the output and errors generated by PDFTeX,
+#    even though I don't use them here.
+out, err = p.communicate(tex_script)
+
+# clean up - delete temporary files
+ext_list = ('log', 'aux')
+for ext in ext_list:
+   os.remove( f'{jobname}.{ext}')
+#+end_src
+
+
+While I cannot convert my PDF to JPG or PNG without Imagemagik, I can
+have TikZ scripts in my Org documents; and more powerfully, I can run
+any script in an appropriate program from within a code block.
+

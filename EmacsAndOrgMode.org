@@ -934,7 +934,6 @@ have TikZ scripts in my Org documents; and more powerfully, I can run
 any script in an appropriate program from within a code block.
 
 
-
 * Running an Arbitrary Program in a Python Code Block
 
 ** A MATLAB Example
@@ -946,7 +945,7 @@ If you want to run this on a Windows computer, you may have to set up
 your computer using [[https://www.mathworks.com/matlabcentral/answers/102082-how-do-i-call-matlab-from-the-dos-prompt][these instructions]].
 
 #+name: script_matlab_plot
-#+begin_src python :exports none :results output
+#+begin_src python :results output
 '''
 This Python script creates a stand-alone LaTeX figure.
 '''

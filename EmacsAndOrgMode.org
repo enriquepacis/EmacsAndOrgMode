@@ -1,3 +1,4 @@
+#+startup: overview indent
 #+LATEX_HEADER: \usepackage[margin=1in]{geometry}
 #+LATEX_HEADER: \usepackage{cite}
 #+LATEX_HEADER: \usepackage{braket,cancel}
@@ -74,12 +75,13 @@ layer that introduces some nice custom preferences.
 * Getting Started With Emacs
 
 Step zero in getting started with Emacs is to take the built-in
-tutorial. To do this, fire up your Emacs program using the keystroke
-=C-h t=. To use this keystroke, you must first understand this fairly
-standard form for listing Emacs keystrokes. I describe it below. Once
-you know how to do the keystrokes, you will be in a good position to
-start the tutorial. Once you complete the tutorial, you will have
-completed your first step in the journey to being an Emacs master.
+tutorial. To do this, fire up your Emacs program, and then initiate
+the tuorial using the keystroke =C-h t=. To use this keystroke, you
+must first understand this fairly standard form for listing Emacs
+keystrokes. I describe it below. Once you know how to do the
+keystrokes, you will be in a good position to start the tutorial. Once
+you complete the tutorial, you will have completed your first step in
+the journey to being an Emacs master.
 
 ** Emacs Keystrokes
 In the following keystrokes (or "Macros"), =C= denotes the =CONTROL=
@@ -171,7 +173,7 @@ Mitsuharu version of Emacs on MacPorts, it creates a =~/.emacs.d/=
 directory, and I am able to choose whether I want to establish my
 preferences in =~/.emacs=, =~/.emacs.el=, or =~/.emacs.d/init.el=. A
 good  source of information on initialization/customization is the
-Emacs manual section on the /Emacs Initialization File/.
+Emacs manual section on the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][Emacs Initialization File]].
 
 *** UNIX/Linux
 The instructions here are the same as Mac, for the Mac OS is built on
@@ -945,7 +947,7 @@ If you want to run this on a Windows computer, you may have to set up
 your computer using [[https://www.mathworks.com/matlabcentral/answers/102082-how-do-i-call-matlab-from-the-dos-prompt][these instructions]].
 
 #+name: script_matlab_plot
-#+begin_src python :results output
+#+begin_src python :results output :exports both
 '''
 This Python script creates a stand-alone LaTeX figure.
 '''
@@ -1048,3 +1050,16 @@ Error text:
 
 The resulting jpg can be viewed:
 [[./img/sine_plot.jpg]]
+
+
+** Phone Interview
+4 Full/10 Assoc/2 Tenure track
+
+
+*** Assoc. Prof Dan Opila
+
+*** 
+- Hiring Timeline?
+  - Virtual on campus
+    - Hear by the end of january
+  - Mid-late March

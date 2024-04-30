@@ -921,7 +921,7 @@ such as =qsub=.
 
 An example script is as follows:
 #+name: script_tikz_four_dot_states
-#+begin_src python :exports none :results none
+#+begin_src python :results none
 '''
 This Python script creates a stand-alone LaTeX figure.
 '''

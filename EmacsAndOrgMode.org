@@ -113,7 +113,7 @@ The following commands are useful when editing files.
 |-----------+------------------------|
 | Macro     | Action                 |
 |-----------+------------------------|
-| =C-x C-x= | Save buffer to file.   |
+| =C-x C-s= | Save buffer to file.   |
 |-----------+------------------------|
 | =C-x C-c= | Quit Emacs             |
 |-----------+------------------------|
@@ -122,6 +122,27 @@ The following commands are useful when editing files.
 | =C-e=     | Go to end of line      |
 |-----------+------------------------|
 | =C-x C-u= | Undo previous command  |
+|-----------+------------------------|
+
+*** Code Blocks
+
+|-----------------+----------------------------|
+| Macro           | Action                     |
+|-----------------+----------------------------|
+| =C-c C-c=       | Execute code block         |
+|-----------------+----------------------------|
+| =C-u C-c C-v t= | Tangle a single code block |
+|-----------------+----------------------------|
+
+
+*** Emacs Lisp Commands
+
+|-----------------+-----------------------------|
+| Macro           | Action                      |
+|-----------------+-----------------------------|
+| =C-h v varname= | Display value of a variable |
+|-----------------+-----------------------------|
+
 
 * Extending Emacs: Lisp
 The great power of Emacs is the fact that it is extensible. Emacs is
@@ -730,6 +751,26 @@ To do this, we add the following to our Emacs preference file:
 Beamer is a LaTeX class for presentations. The org-mode reference has
 a section on beamer, but there also is a nice page on orgmode.org
 titled "[[https://orgmode.org/worg/exporters/beamer/ox-beamer.html][Beamer presentations using the new export engine]]".
+
+
+** The Export Process
+
+*** Key Variables
+
+I learned about these variables from the Emacs help, i.e., =C-h v
+varname=. I started with =org-latex-logfiles-extensions=, and the
+interactive help taught me about other variables. I found that I could
+interactively adjust =org-latex-remove-logfiles=.
+
+|---------------------------------+---------------------------------------------------------------------------|
+| Variable                        | Purpose                                                                   |
+|---------------------------------+---------------------------------------------------------------------------|
+| =org-latex-logfiles-extensions= | List of log files. This is defined in =ox-latex.el=                       |
+|---------------------------------+---------------------------------------------------------------------------|
+| =org-latex-remove-logfiles=     | List of log files to remove. Logfiles will be removed if this is non-nil. |
+|---------------------------------+---------------------------------------------------------------------------|
+| =setq org-latex-pdf-process=    | Defines the LaTeX export sequence                                         |
+|---------------------------------+---------------------------------------------------------------------------|
 
 * Illustrations in Org mode
 

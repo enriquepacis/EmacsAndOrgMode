@@ -1118,14 +1118,5 @@ The resulting jpg can be viewed:
 [[./img/sine_plot.jpg]]
 
 
-** Phone Interview
-4 Full/10 Assoc/2 Tenure track
 
-
-*** Assoc. Prof Dan Opila
-
-*** 
-- Hiring Timeline?
-  - Virtual on campus
-    - Hear by the end of january
-  - Mid-late March
+    

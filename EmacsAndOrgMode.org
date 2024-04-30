@@ -145,6 +145,21 @@ take effect.
    Typically, Emacs looks for the preferences file in several
    locations. I discuss some platform specifics below.
 
+*** Find your User Preferences File using Emacs (easy!)
+There are several nice/easy ways I found on StackExchange (see the
+[[https://stackoverflow.com/questions/189490/where-can-i-find-my-emacs-file-for-emacs-running-on-windows][answer by gone/cruizh]]) to open your preferences file in Emacs. Try any
+of these:
+1. Find the value of the Emacs variable =user-init-file=. To find
+   this, type =C-h v user-init-file= (followed by RETURN). If you see
+   a =~= in the reported value, this is shorthand for your user HOME
+   directory.
+2. Open your preferences file directory by doing the following:
+   1. =M-x eval-expression=, followed by RETURN
+   2. =(find-file user-init-file)
+
+This can be done on any platform, but some platform-specific notes are
+provided below.
+
 *** Windows
 On Windows, [[https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html][these instructions]] tell you where to look for your
 preferences file, or where to put it if you have to make one. You may
@@ -152,6 +167,7 @@ initially use any text editor to create/edit your preferences
 file. Later, if you become drunk with the power of Emacs, you may want
 to use only Emacs to edit it, and that is just fine.
 
+**** Finding your User Preferences File using the File Explorer GUI
 _Warning_. On Windows, you must beware of hidden file extensions. For
 example, you may create a preferences file =init.el= or
 =Preferences.el= and then save it in an appropriate place. If Emacs is

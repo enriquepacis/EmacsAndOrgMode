@@ -1,3 +1,6 @@
+# -*- codig: utf-8 -*-
+# -*- mode: org -*-
+
 #+startup: overview indent
 #+LATEX_HEADER: \usepackage[margin=1in]{geometry}
 #+LATEX_HEADER: \usepackage{cite}
@@ -167,19 +170,25 @@ initially use any text editor to create/edit your preferences
 file. Later, if you become drunk with the power of Emacs, you may want
 to use only Emacs to edit it, and that is just fine.
 
-**** Finding your User Preferences File using the File Explorer GUI
-_Warning_. On Windows, you must beware of hidden file extensions. For
-example, you may create a preferences file =init.el= or
-=Preferences.el= and then save it in an appropriate place. If Emacs is
-unable to locate your file even when it is rightly located, it may be
-because whatever Windows text editor you are using has appended a file
-extension =*.txt= so that Windows "knows" it's a text file. In this
-case, Emacs cannot find the preferences file it is seeking, because it
-doesn't exist! To fix this, you can make Windows show hidden file
-extensions. Once you have done this, you can use the Explorer to
-naviate to the file and remove the =*.txt= extension. Then, start or
-restart Emacs, and it should find the rightly-named and rightly-placed
-start-up file.
+ _Warning_. On Windows, you must beware of hidden file extensions. To 
+ view hidden files navigate to the view tab and selected "view hidden items"
+ For example, you may create a preferences file =init.el= or
+ =Preferences.el= and then save it in an appropriate place. If Emacs is
+ unable to locate your file even when it is rightly located, it may be
+ because whatever Windows text editor you are using has appended a file
+ extension =*.txt= so that Windows "knows" it's a text file. In this
+ case, Emacs cannot find the preferences file it is seeking, because it
+ doesn't exist! To fix this, you can make Windows show hidden file
+ extensions. Once you have done this, you can use the Explorer to
+ naviate to the file and remove the =*.txt= extension. Then, start or
+ restart Emacs, and it should find the rightly-named and rightly-placed
+ start-up file.
+
+ In some cases the preference or =.emacs= file can be found in by viewing
+ hidden files in the personal user directory and navigating to the AppData
+ folder that appears. The preference or  =.emacs= file should be in the Roaming
+ folder.
+
 
 *** Mac
 Often, the Emacs start-up file is your =~/.emacs= file. On Aquamacs,

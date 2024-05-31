@@ -653,6 +653,20 @@ intervening safety/security step between (1) and (2) of confirming
 that you allow Emacs to communicate with the outside world by typing
 =Always=.
 
+*Note to Mac users.* As of May 31, 2024, I was unable to install
+=org-ref= in Aquamacs. This is because on =M-x package-install
+org-ref=, I would see =Package 'emacs-26.1' not available.= Since
+Aquamacs is based on Emacs 25.X, this forces me to migrate to
+[[https://emacsformacosx.com][Emacs for Mac OS X]]. I just installed Emacs version 29.3. Some notes
+about installing =org-ref=:
+1. If you see =[no match]= when trying to install packages, try
+   pointing Emacs to [[https://melpa.org/#/][MELPA]]
+   1. Add code like this to your Emacs preferences file (=~/.emacs=; [[https://melpa.org/#/getting-started][source]])
+   2. Restart Emacs
+   3. Use =M-x package-refresh-contents=
+      1. I couldn't find packagkes until after this step! I was even
+         able to use =M-x package-install org-ref=
+
 Once =org-ref= is installed, you may need to make sure it's "required"
 in your Emacs start-up file.
 

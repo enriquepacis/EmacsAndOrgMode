@@ -46,17 +46,17 @@ Org mode, all that functionality is available to you.
 
 * Obtaining Emacs
 
-| Software          | Platforms         |
-|-------------------+-------------------|
-| [[http://aquamacs.org][Aquamacs]]          | Mac               |
-|-------------------+-------------------|
-| [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Mitsuharu's Emacs]] | Mac               |
-|-------------------+-------------------|
-| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]]         | Windows/Mac/Linux |
-|-------------------+-------------------|
-| [[https://github.com/jkitchin/scimax][scimax]]            | Windows/Mac/Linux |
-|-------------------+-------------------|
-| [[https://www.spacemacs.org/][spacemacs]]         | Windows/Mac/Linux |
+| Software          | Platforms         | Notes                   |
+|-------------------+-------------------+-------------------------|
+| [[http://aquamacs.org][Aquamacs]]          | Mac               |                         |
+|-------------------+-------------------+-------------------------|
+| [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Mitsuharu's Emacs]] | Mac               |                         |
+|-------------------+-------------------+-------------------------|
+| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]]         | Windows/Mac/Linux | Easy install on Windows |
+|-------------------+-------------------+-------------------------|
+| [[https://github.com/jkitchin/scimax][scimax]]            | Windows/Mac/Linux |                         |
+|-------------------+-------------------+-------------------------|
+| [[https://www.spacemacs.org/][spacemacs]]         | Windows/Mac/Linux |                         |
 
 ** Additional Notes
 

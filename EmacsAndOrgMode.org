@@ -1,4 +1,4 @@
-# -*- codig: utf-8 -*-
+# -*- coding: utf-8 -*-
 # -*- mode: org -*-
 
 #+startup: overview indent
@@ -509,6 +509,125 @@ following should be included in your preferences file:
 #+END_SRC
 This adds support for shell scripts in the code block.
 
+*** Conda Environments in Emacs
+I wanted to learn to use different Conda environments in Emacs. The
+best thing I came across so far is the =conda.el= package ([[https://github.com/necaris/conda.el][GitHub]]).
+
+To Install, I used =M-x package-refresh-contents=, and then
+=M-x package-install conda=.
+
+When I tried to use =M-x conda-env-activate=, I got this error:
+#+begin_quote
+There doesn't appear to be a conda or mamba executable in your exec
+path. A common cause of problems like this is GUI Emacs not having
+environment variable set up like the shell. See
+https://github.com/purcell/exec-path-from-shell for a robust solution
+to this problem.
+#+end_quote
+
+**** Tried (didn't work)
+***** exec-path-from-shell (library)
+The [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell page]] has this promising quote:
+#+begin_quote
+Ever find that a command works in your shell, but not in Emacs?
+
+This happens a lot on OS X, where an Emacs instance launched as a GUI app inherits a default minimal set of environment variables that are probably not the ones you see in a terminal window. Similarly, if you start Emacs as a daemon from systemd or launchd, it will run with a default set of environment variables.
+
+This library solves this problem by copying important environment variables from the user's shell: it works by asking your shell to print out the variables of interest, then copying them into the Emacs environment.
+#+end_quote
+
+****** Usage
+The documentation recommends using this after the
+=(package-initialize)= command:
+#+begin_src elisp :eval never
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+end_src
+
+After doing this, I could use =M-x conda-env-activate=.
+
+#+begin_src python :results output
+import sys
+print(sys.executable)
+#+end_src
+
+#+RESULTS:
+: /Users/enrique_blair/anaconda3/bin/python3
+
+***** =conda-env-activate-for-buffer=
+Perhaps of greater interest to me than =conda-env-activate= is
+=conda-env-activate-for-buffer=.
+
+After using =M-x conda-env-activate-for-buffer=, the following code
+block still pointed to the base installation! Not good.
+#+begin_src python :results output
+import sys
+print(sys.executable)
+#+end_src
+
+#+RESULTS:
+: /Users/enrique_blair/anaconda3/bin/python3
+
+Perhaps it works for a session associated with a notebook?
+
+#+begin_src python :results output :session
+import sys
+print(sys.executable)
+#+end_src
+
+#+RESULTS:
+: /Users/enrique_blair/anaconda3/bin/python3
+
+This didn't seem to help. It may be because of the following warning,
+which I received when executing a session:
+#+begin_quote
+Warning (python): Your ‘python-shell-interpreter’ doesn’t seem to support readline, yet ‘python-shell-completion-native-enable’ was t and "python3" is not part of the ‘python-shell-completion-native-disabled-interpreters’ list.  Native completions have been disabled locally. 
+#+end_quote
+
+***** Setting the =org-babel-python-command= variable
+Normally, I would use the following to set the 
+#+begin_src lisp
+(setq org-babel-python-command "~/anaconda3/envs/qiskit0.45/bin/python3")
+#+end_src
+Maybe I can set =org-babel-python-command= locally within a
+variable. I think something to try is:
+#+begin_src text :eval never
+ * Local variables
+ # local variables:
+ # eval: (auto-fill-mode 0)
+ #  eval: (poly-org-mode 0)
+ # org-babel-python-command: '(("html" . "") ("php" . ""))
+ # end:
+#+end_src
+
+Note: there was a missing parenthesis, so I added it and fixed it
+here.
+
+**** True (worked)
+***** BEST: Have a =load_local_vars= script
+
+Having a script like this seemed to work for me:
+#+name: load_local_vars
+#+begin_src emacs-lisp :results output :session :exports both
+(setq-local org-babel-python-command (expand-file-name "~/anaconda3/envs/qiskit0.45/bin/python3"))
+#+end_src
+
+#+RESULTS: load_local_vars
+
+The key here is to use =setq-local= to set a variable locally for a
+given buffer.
+
+Then, a nice test is a code block like this:
+#+begin_src python :results output
+import sys
+print(sys.executable)
+#+end_src
+
+#+RESULTS:
+: /Users/enrique_blair/anaconda3/envs/qiskit0.45/bin/python3
+
+If this points to the right directory for a given environment, then I
+think we're doing well.
 
 *** Troubleshooting
 

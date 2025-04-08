@@ -46,17 +46,17 @@ Org mode, all that functionality is available to you.
 
 * Obtaining Emacs
 
-| Software          | Platforms         | Notes                   |
-|-------------------+-------------------+-------------------------|
-| [[http://aquamacs.org][Aquamacs]]          | Mac               |                         |
-|-------------------+-------------------+-------------------------|
-| [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Mitsuharu's Emacs]] | Mac               |                         |
-|-------------------+-------------------+-------------------------|
-| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]]         | Windows/Mac/Linux | Easy install on Windows |
-|-------------------+-------------------+-------------------------|
-| [[https://github.com/jkitchin/scimax][scimax]]            | Windows/Mac/Linux |                         |
-|-------------------+-------------------+-------------------------|
-| [[https://www.spacemacs.org/][spacemacs]]         | Windows/Mac/Linux |                         |
+| Software          | Platforms         | Notes                                        |
+|-------------------+-------------------+----------------------------------------------|
+| +[[http://aquamacs.org][Aquamacs]]+        | Mac               | No longer endorsed. Emacs 25/26 is outdated. |
+|-------------------+-------------------+----------------------------------------------|
+| [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Mitsuharu's Emacs]] | Mac               |                                              |
+|-------------------+-------------------+----------------------------------------------|
+| [[https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html][Gnu Emacs]]         | Windows/Mac/Linux | Easy install on Windows, Mac, and MacPorts   |
+|-------------------+-------------------+----------------------------------------------|
+| [[https://github.com/jkitchin/scimax][scimax]]            | Windows/Mac/Linux |                                              |
+|-------------------+-------------------+----------------------------------------------|
+| [[https://www.spacemacs.org/][spacemacs]]         | Windows/Mac/Linux |                                              |
 
 ** Additional Notes
 
@@ -70,6 +70,10 @@ support Org mode. Therefore, I favored Aquamacs, because it supported
 Org mode and many of the other prerequisites for Org mode. I later
 tried Mitsuaru's Emacs, but I found I liked the Mac functionalities of
 Aquamacs much better, so I returned to Aquamacs.
+
+As an update in November 2024, Aquamacs is outdated. Emacs is up to
+version 29, but Aquamacs is based on Emacs 25.3. Thus, many newer
+capabilities of Emacs are inaccessible on Aquamacs.
 
 spacemacs appears to not be an actual Emacs program, but rather just a
 layer that introduces some nice custom preferences.
@@ -425,6 +429,23 @@ follows:
 | =OPT+(right arrow)= | Demote outline/list item. (Aquamacs)          |
 |                     |                                               |
 
+* Useful Packages
+
+** =company-mode=
+
+Short for *comp*lete *any*thing, [[http://company-mode.github.io][company-mode]] provides TAB completions
+in Emacs buffers. It may be installed using a standard package manager
+from the ELPA or MELPA repositories.
+
+** =gptel=
+[[https://github.com/karthink/gptel][gptel]] is an Emacs client for many large-language-model (LLM) AI tools.
+
+** =org-roam=
+
+[[https://www.orgroam.com/manual.html#Introduction][org-roam]] provides Wiki-style content development of linked Emacs
+org files. These files represent linked nodes in a graph of information.
+
+This capability is similar to the capabilities of [[https://obsidian.md][Obsidian]].
 
 * Code Blocks in Org Mode
 
@@ -444,7 +465,21 @@ Code blocks may be:
   #+END_VERBATIM
   
   Then, the =org-babel-tangle= command may be invoked using =C-u C-c
-  C-v t= (tangle a single code block) or =C-c C-v t= (tangle all code blocks).
+  C-v t= (tangle a single code block) or =C-c C-v t= (tangle all code
+  blocks).
+  
+** Some Code-block Macros
+
+|--------------------------------+-----------------|
+| Task                           | Macro           |
+|--------------------------------+-----------------|
+| Insert code block              | =C-c C-,=       |
+| Run code block                 | =C-c C-c=       |
+| Tangle single code block       | =C-u C-c C-v t= |
+| Edit code block in buffer      | =C-c ,=         |
+| Save code block, update buffer | =C-x C-s=       |
+| Exit code block buffer         | =C-c ,=         |
+|--------------------------------+-----------------|
 
 ** Python in Org Mode
 
@@ -508,6 +543,124 @@ following should be included in your preferences file:
    (sh . t)))
 #+END_SRC
 This adds support for shell scripts in the code block.
+
+*** Using Shell Scripts in Python
+
+This is a powerful technique for using Python to run external programs. This is
+particularly useful when you want to use third-party (i.e., non-Python) software
+to manipulate files or data. One nice reference for this concept is in a
+stackoverflow [[https://stackoverflow.com/a/29269316][thread]]. I have used this technique numerous times.
+
+The technique here is:
+1. Define a script stored in a Python variable
+2. Then, define a ~subprocess.Popen~ object with the desired interpreter for
+   your script.
+   1. On Mac/Linux, you could use ~/bin/bash~ or the newer ~/bin/zsh~, or even specify
+      a Python executable
+   2. On a PC, you can specify ~cmd.exe~ or Python
+3. Pass your script variable to your ~Popen~ object using the
+   ~Popen.communicate()~ method
+4. (Optional) Display results/output as desired
+
+**** Mac/Linux-only Example
+
+In this Mac-only example, we use the ~pwd~ command and the ~echo~ command. We
+could just as easily invoke a more complex program, such as ~MATLAB~ or a
+compiler, ~latex~, ~lyx~, ~pandoc~, ~quantumESPRESSO~, or any other program you
+could imagine.
+
+#+begin_src python :results output
+  import subprocess as sp
+
+  script="""
+  pwd # display the current working directory
+  echo 'hello world'
+  """
+
+  p = sp.Popen('/bin/zsh',
+               stdin=sp.PIPE,
+               stdout=sp.PIPE,
+               stderr=sp.PIPE,
+               text=True)
+
+  out, err = p.communicate( script )
+
+  print(f'Script output:\n{out}')
+
+
+#+end_src
+
+#+RESULTS:
+: Script output:
+: /Users/enrique_blair/Library/CloudStorage/GoogleDrive-epblair@gmail.com/My Drive/learning/computer_programming/EmacsAndOrgMode
+: hello world
+: 
+
+**** Mac/Windows/PC
+
+In this example, we can use the same concepts, but make the Python flexible
+enough to run on Windows, as well. Here, we use ~os.name~ or ~sys.platform~ to detect the
+operating system, and based on the value, we specify the appropriate syntax.
+
+| OS      | ~os.name~ | ~sys.platform~ | ~platform.system()~ |
+|---------+-----------+----------------+---------------------|
+| Mac     | ~posix~   | ~darwin~       | ~Darwin~            |
+|---------+-----------+----------------+---------------------|
+| Windows | ??        | ??             | ~Windows~           |
+
+#+begin_src python :results output
+  import subprocess as sp
+  import os, sys, platform
+
+  if platform.system() == 'Darwin':
+      # The script need not have indentation consistent
+      # with the 
+      script="""
+  pwd # display the current working directory
+  echo 'hello world'
+  """
+
+      p = sp.Popen('/bin/zsh',
+                   stdin=sp.PIPE,
+                   stdout=sp.PIPE,
+                   stderr=sp.PIPE,
+                   text=True)
+
+  elif platform.system() == 'Windows':
+      """I'm not 100% sure the Windows script works
+      but at least this is the general idea.         
+      """
+
+      # The script need not have indentation consistent
+      # with the 
+      script="""
+  cwd # display the current working directory
+  dir
+  """
+
+      p = sp.Popen('cmd.exe',
+                   stdin=sp.PIPE,
+                   stdout=sp.PIPE,
+                   stderr=sp.PIPE,
+                   text=True)
+  else:
+      raise Exception(f"Unsupported platform: {platform.system()}.")
+
+  # The remainder of this script is common to all platforms
+  out, err = p.communicate( script )
+
+  print(f'Script output:\n{out}')
+
+#+end_src
+
+#+RESULTS:
+: posix
+: darwin
+: Darwin
+: Script output:
+: /Users/enrique_blair/Library/CloudStorage/GoogleDrive-epblair@gmail.com/My Drive/learning/computer_programming/EmacsAndOrgMode
+: hello world
+: 
 
 *** Conda Environments in Emacs
 I wanted to learn to use different Conda environments in Emacs. The
